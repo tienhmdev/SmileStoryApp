@@ -33,7 +33,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void createDatabase() {
         boolean dbExist = checkDataBase();
-        Log.d("AAA", "dbExist: " + dbExist);
 
         if (dbExist) {
             Log.d("AAA", "db exists");
