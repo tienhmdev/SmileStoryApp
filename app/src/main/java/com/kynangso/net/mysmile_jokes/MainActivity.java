@@ -1,7 +1,6 @@
 package com.kynangso.net.mysmile_jokes;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.design.widget.NavigationView;
@@ -18,10 +17,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
 import com.kynangso.net.mysmile_jokes.adapter.SystemPagerAdapter;
 import com.kynangso.net.mysmile_jokes.fragment.DialogSettings;
 import com.kynangso.net.mysmile_jokes.interfaces.IClickCategoryListener;
