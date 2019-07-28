@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- used for text content color -->
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <!-- used for background all system -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
+        <!-- used for title text all system -->
+        <item name="colorAccent">@color/colorAccentLight</item>
+    </style>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- used for text content color -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <!-- used for background all system -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDark</item>
+        <!-- used for title text all system -->
+        <item name="colorAccent">@color/colorAccentDark</item>
+    </style>
+</resources>

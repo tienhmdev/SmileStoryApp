@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MySmile - Jokes</string>
+    <string name="app_background">This is background of the application</string>
+    <string name="app_image_describe">This is image view</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

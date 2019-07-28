@@ -1,0 +1,38 @@
+<LinearLayout android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="#812727"
+    android:gravity="center"
+    android:orientation="horizontal"
+    tools:ignore="UselessParent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/imvAvatar"
+        android:src="@drawable/logo_ver2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/circle_avatar"
+        android:contentDescription="@string/app_image_describe" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_bold"
+            android:padding="2dp"
+            android:text="MY SMILE"
+            android:textAllCaps="true"
+            android:textColor="?attr/colorPrimaryDark"
+            android:textSize="30sp" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
