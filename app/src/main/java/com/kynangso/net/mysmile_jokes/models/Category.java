@@ -1,4 +1,4 @@
-package com.kynangso.net.mysmile_jokes.model;
+package com.kynangso.net.mysmile_jokes.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,10 +8,15 @@ public class Category implements Parcelable{
     private String mCategoryTitle;
     private String mTableName;
 
+    public Category() {
+    }
+
     public Category(int mCategoryId, String mCategoryTitle, String mTableName) {
         this.mCategoryId = mCategoryId;
         this.mCategoryTitle = mCategoryTitle;
         this.mTableName = mTableName;
+
+
     }
 
     protected Category(Parcel in) {

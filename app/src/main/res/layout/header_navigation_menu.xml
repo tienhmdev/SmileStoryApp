@@ -10,9 +10,8 @@
 
     <ImageView
         android:id="@+id/imvAvatar"
-        android:src="@drawable/logo_ver2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@drawable/circle_avatar"
         android:contentDescription="@string/app_image_describe" />
 
@@ -25,12 +24,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksand_bold"
+            android:fontFamily="@font/quicksand_regular"
             android:padding="2dp"
-            android:text="MY SMILE"
-            android:textAllCaps="true"
+            android:text="Login or Register"
             android:textColor="?attr/colorPrimaryDark"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
 
     </LinearLayout>

@@ -19,35 +19,51 @@
             android:text="Day handsome addition horrible sensible goodness two contempt. Evening for married his account removal. Estimable me disposing of be moonlight cordially curiosity. Delay rapid joy share allow age manor six. Went why far saw many knew. Exquisite excellent son gentleman acuteness her. Do is voice total power mr ye might round still. "
             android:textSize="20sp" />
     </android.support.v4.widget.NestedScrollView>
-    <ImageView
-        android:id="@+id/imvIconReSize"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/ic_resize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <SeekBar
-        android:layout_toEndOf="@id/imvIconReSize"
-        android:min="10"
-        android:max="50"
-        android:id="@+id/seekBar"
-        android:layout_margin="10dp"
-        android:layout_toStartOf="@+id/imvSpeaker"
+    <RelativeLayout
+        android:background="#FFFFFF"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
-    <ImageView
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/imvSpeaker"
-        android:layout_margin="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/speaker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/imvIconReSize"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_resize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <SeekBar
+            android:layout_toEndOf="@id/imvIconReSize"
+            android:min="10"
+            android:max="50"
+            android:id="@+id/seekBar"
+            android:layout_margin="10dp"
+            android:layout_toStartOf="@+id/imvSpeaker"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+        <ImageView
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/imvSpeaker"
+            android:layout_margin="10dp"
+            android:layout_toStartOf="@id/imvFavorite"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/imvFavorite"
+            android:layout_margin="10dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </RelativeLayout>

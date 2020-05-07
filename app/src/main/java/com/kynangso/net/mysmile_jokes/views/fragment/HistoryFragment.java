@@ -1,22 +1,24 @@
-package com.kynangso.net.mysmile_jokes.fragment;
+package com.kynangso.net.mysmile_jokes.views.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.kynangso.net.mysmile_jokes.models.StoryV2;
 import com.kynangso.net.mysmile_jokes.MainActivity;
 import com.kynangso.net.mysmile_jokes.R;
 import com.kynangso.net.mysmile_jokes.adapter.HistoryRecyclerAdapter;
-import com.kynangso.net.mysmile_jokes.adapter.HomeRecyclerAdapter;
-import com.kynangso.net.mysmile_jokes.model.Story;
 
 import java.util.ArrayList;
 
@@ -26,12 +28,13 @@ interface HistoryUpdatable {
 
 public class HistoryFragment extends Fragment implements HistoryUpdatable{
     public static String PUT_HISTORY_STORY_KEY = "historyStory";
-    ArrayList<Story> stories;
+    ArrayList<StoryV2> stories;
     RecyclerView recyclerView;
+    SwipeRefreshLayout srLayout;
     HistoryRecyclerAdapter adapter;
     TextView tvDoNotHistoryStory;
 
-    public static HistoryFragment getInstance(ArrayList<Story> stories){
+    public static HistoryFragment getInstance(ArrayList<StoryV2> stories){
         HistoryFragment historyFragment = new HistoryFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(PUT_HISTORY_STORY_KEY, stories);
@@ -59,6 +62,7 @@ public class HistoryFragment extends Fragment implements HistoryUpdatable{
         findView(view);
         setupRecyclerView();
         setupDefaultView();
+        setupSwipeRefreshLayout();
         return view;
     }
 
@@ -78,6 +82,7 @@ public class HistoryFragment extends Fragment implements HistoryUpdatable{
     }
 
     private void findView(View view) {
+        srLayout = view.findViewById(R.id.srLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
         tvDoNotHistoryStory = view.findViewById(R.id.tvDoNotHistoryStory);
     }
@@ -90,5 +95,20 @@ public class HistoryFragment extends Fragment implements HistoryUpdatable{
     @Override
     public void update() {
         setupDefaultView();
+        adapter.notifyDataSetChanged();
+    }
+    private void setupSwipeRefreshLayout() {
+        srLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(getContext(), "refresh", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        srLayout.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
     }
 }

@@ -19,7 +19,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:textColor="?attr/colorAccent"
+            android:textColor="@color/colorPrimaryDarkLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="30dp"
@@ -53,7 +53,7 @@
             android:padding="10dp"
             android:text="Chế Độ Nền Tối"
             android:textAllCaps="true"
-            android:textColor="?attr/colorAccent"
+            android:textColor="@color/colorPrimaryDarkLight"
             android:textSize="17sp" />
 
         <ImageView
@@ -77,13 +77,13 @@
         android:weightSum="10">
 
         <TextView
+            android:textColor="@color/colorPrimaryDarkLight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:padding="10dp"
             android:text="AUTO PLAY AUDIO"
             android:textAllCaps="true"
-            android:textColor="?attr/colorAccent"
             android:textSize="17sp" />
 
         <ImageView
@@ -96,7 +96,7 @@
     </LinearLayout>
 
     <TextView
-        android:textColor="?attr/colorAccent"
+        android:textColor="@color/colorPrimaryDarkLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvAutoReadLayout"

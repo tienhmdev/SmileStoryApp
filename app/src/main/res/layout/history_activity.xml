@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="?attr/colorPrimaryDark"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimaryDark">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
-        android:fontFamily="@font/maitree_edium"
-        android:textColor="?attr/colorAccent"
-        android:background="?attr/colorPrimaryDark"
         android:id="@+id/tvDoNotHistoryStory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="?attr/colorPrimaryDark"
         android:drawableEnd="@drawable/ic_warning"
+        android:fontFamily="@font/maitree_edium"
         android:gravity="center"
         android:text="Lịch sử trống "
-        android:textSize="15sp"/>
+        android:textColor="?attr/colorAccent"
+        android:textSize="15sp" />
 
 </RelativeLayout>

@@ -1,22 +1,21 @@
-package com.kynangso.net.mysmile_jokes.fragment;
+package com.kynangso.net.mysmile_jokes.views.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.kynangso.net.mysmile_jokes.MainActivity;
 import com.kynangso.net.mysmile_jokes.R;
 import com.kynangso.net.mysmile_jokes.interfaces.RestartListener;
 
-public class DialogSettings extends DialogFragment implements View.OnClickListener {
+public class DialogSettings extends BottomSheetDialogFragment implements View.OnClickListener {
     public static String DARK_MODE = "dark_mode_settings";
     public static String AUTO_READ = "auto_read_settings";
     ImageView imvClose;

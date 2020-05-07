@@ -1,4 +1,4 @@
-package com.kynangso.net.mysmile_jokes.model;
+package com.kynangso.net.mysmile_jokes.models;
 
 
 import android.os.Parcel;

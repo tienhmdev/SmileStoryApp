@@ -1,6 +1,7 @@
 package com.kynangso.net.mysmile_jokes;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.design.widget.NavigationView;
@@ -18,28 +19,31 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Window;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.kynangso.net.mysmile_jokes.R;
 import com.kynangso.net.mysmile_jokes.adapter.SystemPagerAdapter;
-import com.kynangso.net.mysmile_jokes.fragment.DialogSettings;
+import com.kynangso.net.mysmile_jokes.views.fragment.DialogSettings;
 import com.kynangso.net.mysmile_jokes.interfaces.IClickCategoryListener;
 import com.kynangso.net.mysmile_jokes.interfaces.IFavoriteListener;
 import com.kynangso.net.mysmile_jokes.interfaces.OpenPageReadListener;
 import com.kynangso.net.mysmile_jokes.database.DatabaseManager;
-import com.kynangso.net.mysmile_jokes.fragment.CategoryMenu;
-import com.kynangso.net.mysmile_jokes.fragment.FavoritesFragment;
-import com.kynangso.net.mysmile_jokes.fragment.HistoryFragment;
-import com.kynangso.net.mysmile_jokes.fragment.HomeFragment;
-import com.kynangso.net.mysmile_jokes.fragment.ReadFragment;
+import com.kynangso.net.mysmile_jokes.views.fragment.CategoryMenu;
+import com.kynangso.net.mysmile_jokes.views.fragment.FavoritesFragment;
+import com.kynangso.net.mysmile_jokes.views.fragment.HistoryFragment;
+import com.kynangso.net.mysmile_jokes.views.fragment.HomeFragment;
+import com.kynangso.net.mysmile_jokes.views.fragment.ReadFragment;
 import com.kynangso.net.mysmile_jokes.interfaces.RestartListener;
-import com.kynangso.net.mysmile_jokes.model.Category;
-import com.kynangso.net.mysmile_jokes.model.Story;
+import com.kynangso.net.mysmile_jokes.models.Category;
+import com.kynangso.net.mysmile_jokes.models.StoryV2;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements IClickCategoryListener, OpenPageReadListener, IFavoriteListener, RestartListener {
-    ArrayList<Category> categories;
-    ArrayList<Story> stories;
-    ArrayList<Story> historyStory;
+public class MainActivity extends AppCompatActivity implements IClickCategoryListener,
+        OpenPageReadListener, IFavoriteListener, RestartListener {
+    ArrayList<StoryV2> historyStory;
     Fragment[] fragments;
     HomeFragment homeFragment;
     FavoritesFragment favoritesFragment;
@@ -64,10 +68,10 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = getSharedPreferences(SAVE_SETTING_LOCAL_DATABASE, MODE_PRIVATE);
-        if (sharedPreferences.getBoolean(DialogSettings.DARK_MODE, false)){
+        if (sharedPreferences.getBoolean(DialogSettings.DARK_MODE, false)) {
             setTheme(R.style.AppThemeDark);
             darkMode = true;
-        }else {
+        } else {
             setTheme(R.style.AppThemeLight);
             darkMode = false;
         }
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
         setContentView(R.layout.activity_main);
         findView();
         getAllCategoriesFromLocalDatabase();
-        getStoriesFromLocalDatabaseByTableName(categories.get(1).getmTableName());
+//        getStoriesFromLocalDatabaseByTableName(categories.get(1).getmTableName());
         setupActionBar();
         setupNavMenu();
         setupPager();
@@ -84,19 +88,21 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
     }
 
     private void getAllCategoriesFromLocalDatabase() {
-        databaseManager = new DatabaseManager(this);
-        databaseManager.createDatabase();
-        categories = databaseManager.readCategories();
+//        databaseManager = new DatabaseManager(this);
+//        databaseManager.createDatabase();
+//        categories = databaseManager.readCategories();
     }
 
     private void getStoriesFromLocalDatabaseByTableName(String tableName) {
-        databaseManager = new DatabaseManager(this);
-        databaseManager.createDatabase();
-        stories = databaseManager.getDataFromTable(tableName);
+//        databaseManager = new DatabaseManager(this);
+//        databaseManager.createDatabase();
+//        stories = databaseManager.getDataFromTable(tableName);
+
+
     }
 
     private void setupPager() {
-        homeFragment = HomeFragment.getInstance(stories);
+        homeFragment = HomeFragment.getInstance();
         favoritesFragment = new FavoritesFragment();
         historyFragment = HistoryFragment.getInstance(historyStory);
         fragments = new Fragment[]{homeFragment, favoritesFragment, historyFragment};
@@ -121,11 +127,11 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 isOnBackTask();
-                if (tabLayout.getTabAt(0) == tab){
+                if (tabLayout.getTabAt(0) == tab) {
                     getSupportActionBar().setTitle(presentNameOfActionBarHome);
-                }else if (tabLayout.getTabAt(1) == tab){
+                } else if (tabLayout.getTabAt(1) == tab) {
                     getSupportActionBar().setTitle("DANH SÁCH YÊU THÍCH");
-                }else if (tabLayout.getTabAt(2) == tab){
+                } else if (tabLayout.getTabAt(2) == tab) {
                     getSupportActionBar().setTitle("TRUYỆN ĐÃ ĐỌC");
                 }
             }
@@ -148,6 +154,8 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
                         break;
                     case 1:
                         //do
+                        FavoritesFragment favoritesFragment = (FavoritesFragment) fragments[position];
+                        favoritesFragment.reloadData();
                         getSupportActionBar().setTitle("DANH SÁCH YÊU THÍCH");
                         break;
                     case 2:
@@ -170,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        CategoryMenu categoryMenu = CategoryMenu.getInstance(categories);
+        CategoryMenu categoryMenu = CategoryMenu.getInstance();
         getSupportFragmentManager().beginTransaction().add(frameLayout, categoryMenu)
                 .commit();
     }
@@ -199,7 +207,8 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         frameLayoutOverrideReadFragment = R.id.frameLayoutOverrideReadFragment;
-        historyStory = new ArrayList<>(); }
+        historyStory = new ArrayList<>();
+    }
 
     @Override
     public void onBackPressed() {
@@ -216,24 +225,18 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
     public void updateList(Category category) {
         presentNameOfActionBarHome = category.getmCategoryTitle();
         getStoriesFromLocalDatabaseByTableName(category.getmTableName());
-        reSetArguments();
-        Log.d("list", "name:" + stories.get(0).getmViTitle());
         drawerLayout.closeDrawer(GravityCompat.START);
         isOnBackTask();
         HomeFragment homeFragment = (HomeFragment) fragments[0];
         viewPager.setCurrentItem(0);
-        homeFragment.updateList();
+        homeFragment.updateList(category);
         getSupportActionBar().setTitle(presentNameOfActionBarHome);
     }
 
-    private void reSetArguments() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(HomeFragment.PUT_STORIES_HOME_ACTIVITY, stories);
-        homeFragment.setArguments(bundle);
-    }
+
 
     @Override
-    public void open(Story story) {
+    public void open(StoryV2 story) {
         readFragment = ReadFragment.newInstance(story);
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -241,27 +244,23 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
         fragmentTransaction.addToBackStack("ReadFragment");
         fragmentTransaction.setCustomAnimations(R.anim.scale_adapter_animation, R.anim.scale_adapter_animation);
         fragmentTransaction.commit();
-        getSupportActionBar().setTitle(story.getmViTitle());
+        getSupportActionBar().setTitle(story.getTitle());
 
-        for (Story i : historyStory) {
-            if (i.getmId() == story.getmId()) {
-                return;
-            }
-        }
-        historyStory.add(story);
+        historyStory.add(0, story);
     }
-    private void isOnBackTask(){
+
+    private void isOnBackTask() {
         try {
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             }
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Log.d("error: ", "error: " + e.toString());
         }
     }
 
     @Override
-    public void refreshFavorite(boolean isFavorite, Story story) {
+    public void refreshFavorite(boolean isFavorite, StoryV2 story) {
         Log.d("TAGGG", isFavorite + " \n from main activity");
         FavoritesFragment favoritesFragment = (FavoritesFragment) fragments[1];
         favoritesFragment.update(isFavorite, story);
@@ -269,8 +268,8 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
 
     @Override
     protected void onDestroy() {
-        if (readFragment != null){
-            if (readFragment.isInLayout()){
+        if (readFragment != null) {
+            if (readFragment.isInLayout()) {
                 readFragment.onDetach();
             }
         }
@@ -279,12 +278,14 @@ public class MainActivity extends AppCompatActivity implements IClickCategoryLis
 
     @Override
     public void restart(boolean isRestart) {
-        if (isRestart){
-            recreate();
+        if (isRestart) {
+            finish();
+            startActivity(new Intent(MainActivity.this, MainActivity.class));
         }
     }
-    public  static void setNotifyDataSetChanged(RecyclerView.Adapter adapter){
-        if (adapter != null){
+
+    public static void setNotifyDataSetChanged(RecyclerView.Adapter adapter) {
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
     }

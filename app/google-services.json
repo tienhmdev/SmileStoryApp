@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "566784021507",
+    "firebase_url": "https://v2-firebase-readtime.firebaseio.com",
+    "project_id": "v2-firebase-readtime",
+    "storage_bucket": "v2-firebase-readtime.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:566784021507:android:860f102d535acdbc",
+        "android_client_info": {
+          "package_name": "com.kynangso.net.mysmile_jokes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "566784021507-h1m7cqfct0c960rga5ah9iblgegim8b7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKf1w5QIEGc04-e9ZUzlnoQfe-swwEvIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "566784021507-h1m7cqfct0c960rga5ah9iblgegim8b7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

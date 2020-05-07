@@ -1,4 +1,4 @@
-package com.kynangso.net.mysmile_jokes.fragment;
+package com.kynangso.net.mysmile_jokes.views.fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -11,9 +11,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kynangso.net.mysmile_jokes.models.StoryV2;
 import com.kynangso.net.mysmile_jokes.MainActivity;
 import com.kynangso.net.mysmile_jokes.R;
-import com.kynangso.net.mysmile_jokes.model.Story;
 
 import java.util.Locale;
 
@@ -22,13 +22,15 @@ public class ReadFragment extends Fragment {
     TextToSpeech textToSpeech;
     TextView tvContent;
     SeekBar seekBar;
+    boolean isFavorite = true;
     public static final String PUT_STORY_KEY = "story1102";
     public static final String TEXT_SIZE = "textSize";
-    Story story;
+    StoryV2 story;
     SharedPreferences sharedPreferences;
     ImageView imvSpeaker;
+    ImageView imvFavorite;
 
-    public static ReadFragment newInstance(Story story) {
+    public static ReadFragment newInstance(StoryV2 story) {
         ReadFragment fragment = new ReadFragment();
         Bundle args = new Bundle();
         args.putParcelable(PUT_STORY_KEY, story);
@@ -51,7 +53,23 @@ public class ReadFragment extends Fragment {
         setView();
         setupSeekBar();
         setupTextToSpeech();
+        addFavorite();
         return view;
+    }
+
+    private void addFavorite() {
+        imvFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isFavorite) {
+                    imvFavorite.setImageResource(R.drawable.like);
+                    isFavorite = true;
+                } else {
+                    imvFavorite.setImageResource(R.drawable.dont_like);
+                    isFavorite = false;
+                }
+            }
+        });
     }
 
     private void setupTextToSpeech() {
@@ -71,8 +89,8 @@ public class ReadFragment extends Fragment {
         imvSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Reading sound of " + story.getmViTitle() + "!..", Toast.LENGTH_LONG).show();
-                textToSpeech.speak(story.getmViContent(), TextToSpeech.QUEUE_FLUSH, null);
+                Toast.makeText(getContext(), "Reading sound of " + story.getTitle() + "!..", Toast.LENGTH_LONG).show();
+                textToSpeech.speak(story.getContent(), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
     }
@@ -105,12 +123,13 @@ public class ReadFragment extends Fragment {
     }
 
     private void setView() {
-        tvContent.setText(story.getmViContent());
-        getActivity().setTitle(story.getmViTitle());
+        tvContent.setText(story.getContent());
+        getActivity().setTitle(story.getTitle());
     }
 
     private void findView(View view) {
         imvSpeaker = view.findViewById(R.id.imvSpeaker);
+        imvFavorite = view.findViewById(R.id.imvFavorite);
         tvContent = view.findViewById(R.id.tvContent);
         seekBar = view.findViewById(R.id.seekBar);
         sharedPreferences = getActivity().getSharedPreferences(MainActivity.SAVE_SETTING_LOCAL_DATABASE, getActivity().MODE_PRIVATE);

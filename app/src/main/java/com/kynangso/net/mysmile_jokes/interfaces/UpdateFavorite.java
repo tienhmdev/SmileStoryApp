@@ -1,6 +1,6 @@
 package com.kynangso.net.mysmile_jokes.interfaces;
 
-import com.kynangso.net.mysmile_jokes.model.Story;
+import com.kynangso.net.mysmile_jokes.models.Story;
 
 public interface UpdateFavorite {
     void refresh();

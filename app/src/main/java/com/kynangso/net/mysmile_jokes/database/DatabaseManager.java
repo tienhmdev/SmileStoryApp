@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.kynangso.net.mysmile_jokes.model.Category;
-import com.kynangso.net.mysmile_jokes.model.Story;
+import com.kynangso.net.mysmile_jokes.models.Category;
+import com.kynangso.net.mysmile_jokes.models.Story;
 
 import java.io.File;
 import java.io.FileOutputStream;

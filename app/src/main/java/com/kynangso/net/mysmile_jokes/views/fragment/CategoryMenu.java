@@ -1,7 +1,8 @@
-package com.kynangso.net.mysmile_jokes.fragment;
+package com.kynangso.net.mysmile_jokes.views.fragment;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,11 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kynangso.net.mysmile_jokes.MainActivity;
 import com.kynangso.net.mysmile_jokes.R;
 import com.kynangso.net.mysmile_jokes.adapter.CategoryAdapter;
 import com.kynangso.net.mysmile_jokes.interfaces.IClickCategoryListener;
-import com.kynangso.net.mysmile_jokes.model.Category;
+import com.kynangso.net.mysmile_jokes.models.Category;
 
 import java.util.ArrayList;
 
@@ -33,12 +39,8 @@ public class CategoryMenu extends Fragment implements View.OnClickListener, ICli
 
     public static String PUT_CATEGORY_MENU_KEY = "category_list";
 
-    public static CategoryMenu getInstance(ArrayList<Category> categories) {
-        CategoryMenu categoryMenu = new CategoryMenu();
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(PUT_CATEGORY_MENU_KEY, categories);
-        categoryMenu.setArguments(bundle);
-        return categoryMenu;
+    public static CategoryMenu getInstance() {
+        return new CategoryMenu();
     }
 
     @Override
@@ -65,6 +67,7 @@ public class CategoryMenu extends Fragment implements View.OnClickListener, ICli
         setupMenu();
         imvSettings.setOnClickListener(this);
         setupHeader();
+        getAllCategoryFromDatabase();
         return view;
     }
 
@@ -76,13 +79,13 @@ public class CategoryMenu extends Fragment implements View.OnClickListener, ICli
     private void setupMenu() {
         adapter = new CategoryAdapter(categories, getContext(), R.layout.item_catogory);
         adapter.callBackClickCategoryListener(this);
-        Log.d("AAA", "" + categories.size());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         adapter.notifyDataSetChanged();
     }
 
     private void findView(View view) {
+        categories = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerView);
         imvSettings = view.findViewById(R.id.imvSettings);
         imvAvatar = view.findViewById(R.id.imvAvatar);
@@ -106,5 +109,25 @@ public class CategoryMenu extends Fragment implements View.OnClickListener, ICli
     @Override
     public void updateList(Category category) {
         this.clickCategoryListener.updateList(category);
+    }
+
+
+    private void getAllCategoryFromDatabase(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("tblCategory").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    Category category = ds.getValue(Category.class);
+                    Log.d("Taggg", "value: " + category.getmTableName());
+                    categories.add(category);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -3,7 +3,6 @@ package com.kynangso.net.mysmile_jokes.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,25 +11,25 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kynangso.net.mysmile_jokes.models.StoryV2;
 import com.kynangso.net.mysmile_jokes.MainActivity;
 import com.kynangso.net.mysmile_jokes.R;
 import com.kynangso.net.mysmile_jokes.database.DatabaseManager;
 import com.kynangso.net.mysmile_jokes.interfaces.IFavoriteListener;
 import com.kynangso.net.mysmile_jokes.interfaces.OpenPageReadListener;
-import com.kynangso.net.mysmile_jokes.model.Story;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecyclerAdapter.ViewHolder> {
-    List<Story> stories;
+    List<StoryV2> stories;
     Context context;
     int layout;
     private IFavoriteListener favorite;
     private OpenPageReadListener openPageReadListener;
     boolean isFavorite = false;
 
-    public HistoryRecyclerAdapter(ArrayList<Story> stories, Context context, int layout) {
+    public HistoryRecyclerAdapter(ArrayList<StoryV2> stories, Context context, int layout) {
         this.stories = stories;
         this.context = context;
         this.layout = layout;
@@ -56,9 +55,9 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         final DatabaseManager databaseManager = new DatabaseManager(context);
-        final Story story = stories.get(i);
-        viewHolder.tvTitle.setText(story.getmViTitle());
-        if (databaseManager.isFavorite(story)) {
+        final StoryV2 story = stories.get(i);
+        viewHolder.tvTitle.setText(story.getTitle());
+        if (isFavorite) {
             viewHolder.imvAddToFavorite.setImageResource(R.drawable.like);
         } else {
             viewHolder.imvAddToFavorite.setImageResource(R.drawable.dont_like);
@@ -66,14 +65,16 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPageReadListener.open(stories.get(i));
+               openPageReadListener.open(stories.get(i));
             }
         });
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale_adapter_animation);
+        viewHolder.itemView.setAnimation(animation);
     }
 
     @Override
     public int getItemCount() {
-        if (stories.size() == 0) {
+        if (stories == null) {
             return 0;
         }
         return stories.size();

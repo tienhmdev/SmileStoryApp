@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.kynangso.net.mysmile_jokes.R;
 import com.kynangso.net.mysmile_jokes.interfaces.IClickCategoryListener;
-import com.kynangso.net.mysmile_jokes.model.Category;
+import com.kynangso.net.mysmile_jokes.models.Category;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        if (categories.size() == 0) {
+        if (categories == null) {
             return 0;
         }
         return categories.size();
